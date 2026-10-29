@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Wawapp - Camino Seguro para Niños</title>
+  <!-- Fuente amigable para niños -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --secondary: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --bg-cream: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --radius-sm: 12px;
+      --radius-md: 18px;
+      --radius-lg: 26px;
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+      --shadow-btn: 0 4px 0 rgba(0, 0, 0, 0.15);
+      --shadow-btn-pressed: 0 1px 0 rgba(0, 0, 0, 0.15);
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+      margin: 0;
+      font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+      color: var(--text-main);
+      background-color: var(--bg-cream);
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* BARRA SUPERIOR */
+    header {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 16px;
+      background: #ffffff;
+      border-bottom: 2px solid var(--border);
+      flex-wrap: wrap;
+      z-index: 1000;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Fredoka', cursive, sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .brand span.badge-role {
+      font-size: 11px;
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+
+    /* BOTONES JUGUETONES */
+    button, .btn {
+      font-family: 'Fredoka', cursive, sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      border: 2px solid transparent;
+      border-radius: var(--radius-sm);
+      padding: 8px 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      background: #ffffff;
+      color: var(--text-main);
+      box-shadow: 0 3px 0 var(--border);
+    }
+    button:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 var(--border);
+    }
+
+    button.btn-primary {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0284c7;
+      box-shadow: 0 3px 0 #0369a1;
+    }
+    button.btn-primary:active {
+      box-shadow: 0 1px 0 #0369a1;
+    }
+
+    button.btn-success {
+      background: #10b981;
+      color: #ffffff;
+      border-color: #10b981;
+      box-shadow: 0 3px 0 #059669;
+    }
+    button.btn-success:active {
+      box-shadow: 0 1px 0 #059669;
+    }
+
+    button.btn-share {
+      background: #8b5cf6;
+      color: #ffffff;
+      border-color: #8b5cf6;
+      box-shadow: 0 3px 0 #7c3aed;
+    }
+
+    button.btn-warning {
+      background: #f59e0b;
+      color: #ffffff;
+      border-color: #f59e0b;
+      box-shadow: 0 3px 0 #d97706;
+    }
+
+    button.btn-danger, button.sos {
+      background: #ef4444;
+      color: #ffffff;
+      border-color: #ef4444;
+      box-shadow: 0 3px 0 #dc2626;
+      animation: pulse-sos 2.5s infinite;
+    }
+    @keyframes pulse-sos {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+
+    button.btn-tool {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      color: #334155;
+      font-size: 13px;
+      padding: 6px 11px;
+    }
+    button.btn-tool.active {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0369a1;
+      box-shadow: 0 2px 0 #0369a1;
+    }
+
+    /* BARRA DE CONFIGURACIÓN DE MAMÁ */
+    #mom-bar {
+      display: flex;
+      gap: 10px;
+      padding: 8px 16px;
+      background: #f0fdf4;
+      border-bottom: 2px solid #bbf7d0;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: 13px;
+    }
+    #mom-bar .field-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    #mom-bar input {
+      font-family: inherit;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      font-size: 13px;
+    }
+
+    /* BARRA DE HERRAMIENTAS DEL MAPA */
+    #tools-container {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 8px 16px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+    }
+    #tools {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .tool-group-label {
+      font-size: 12px;
+      font-weight: 800;
+      color: #64748b;
+      margin-right: 2px;
+      text-transform: uppercase;
+    }
+    #status-hint {
+      color: #0284c7;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* SELECTOR DE ÍCONOS DE INICIO Y FIN */
+    .icon-selector {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #e2e8f0;
+      border-radius: 10px;
+      padding: 2px 6px;
+    }
+    .icon-selector select {
+      border: 0;
+      background: transparent;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      outline: none;
+    }
+
+    /* BARRA AMIGABLE DE NIÑO */
+    #child-banner {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: linear-gradient(90deg, #38bdf8 0%, #818cf8 100%);
+      color: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+    #child-banner .child-welcome {
+      font-family: 'Fredoka', cursive, sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #child-banner .child-sub {
+      font-size: 13px;
+      opacity: 0.95;
+    }
+
+    /* CONTENEDORES MAPA Y 3D */
+    #map-view, #v3 {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+    }
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+    #v3 {
+      display: none;
+      background: #bbf2f6;
+    }
+    #c3 {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* HUD EN MODO 3D */
+    #hud-stars {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      color: #0f172a;
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-family: 'Fredoka', cursive, sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(4px);
+      z-index: 20;
+    }
+    #hud-mission {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(15, 23, 42, 0.85);
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 20;
+    }
+
+    /* BOTÓN FLOTANTE EN VISTA 3D */
+    #v3-controls {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      z-index: 20;
+      pointer-events: none;
+    }
+    #v3-controls button {
+      pointer-events: auto;
+      font-size: 16px;
+      padding: 10px 20px;
+      border-radius: 999px;
+    }
+
+    /* ESTILOS DE MARCADORES LEAFLET VISTOSOS */
+    .leaflet-marker-icon.custom-pin {
+      background: transparent;
+      border: 0;
+    }
+    .map-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: translate(-50%, -100%);
+    }
+    .map-badge-bubble {
+      background: #ffffff;
+      border: 3px solid #0284c7;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      animation: float-pin 2s ease-in-out infinite;
+    }
+    @keyframes float-pin {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    .map-badge-label {
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-top: 2px;
+      white-space: nowrap;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    .map-badge-start .map-badge-bubble { border-color: #10b981; }
+    .map-badge-end .map-badge-bubble { border-color: #f59e0b; background: #fffbeb; }
+
+    /* MODALES JUGUETONES */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      display: none;
+      place-items: center;
+      padding: 16px;
+      z-index: 9999;
+    }
+    .modal.on {
+      display: grid;
+    }
+    .modal-box {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      animation: pop-modal 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes pop-modal {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* MODAL DE PREGUNTAS */
+    .q-badge {
+      display: inline-block;
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    .q-title {
+      font-family: 'Fredoka', cursive, sans-serif;
+      font-size: 20px;
+      color: #0f172a;
+      margin: 0 0 16px 0;
+      line-height: 1.35;
+    }
+    .q-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .q-opt {
+      width: 100%;
+      text-align: left;
+      font-family: 'Nunito', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      border: 2px solid #e2e8f0;
+      background: #f8fafc;
+      color: #1e293b;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .q-opt:hover:not(:disabled) {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+    }
+    .q-opt.ok {
+      background: #dcfce7 !important;
+      border-color: #16a34a !important;
+      color: #14532d !important;
+      box-shadow: 0 4px 0 #16a34a;
+    }
+    .q-opt.no {
+      background: #fef2f2 !important;
+      border-color: #f87171 !important;
+      color: #991b1b !important;
+      opacity: 0.85;
+    }
+
+    /* FEEDBACK EDUCATIVO */
+    .feedback-box {
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 700;
+      display: none;
+      text-align: left;
+      line-height: 1.4;
+    }
+    .feedback-box.feedback-ok {
+      display: block;
+      background: #f0fdf4;
+      border: 2px solid #86efac;
+      color: #166534;
+    }
+    .feedback-box.feedback-hint {
+      display: block;
+      background: #fffbeb;
+      border: 2px solid #fde68a;
+      color: #92400e;
+    }
+
+    /* MODAL DE COMPARTIR */
+    .share-link-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px dashed #0284c7;
+      border-radius: 12px;
+      font-family: monospace;
+      font-size: 13px;
+      background: #f0f9ff;
+      margin: 14px 0;
+      word-break: break-all;
+    }
+
+    /* MODO SWITCHER EN ESQUINA */
+    .mode-switch-btn {
+      font-size: 12px;
+      padding: 4px 10px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA DE NAVEGACIÓN SUPERIOR -->
+  <header>
+    <a href="#" class="brand">
+      <span>🎒 Wawapp</span>
+      <span class="badge-role" id="mode-badge">Modo Mamá</span>
+    </a>
+
+    <div class="header-actions">
+      <!-- Botones para Mamá -->
+      <button id="btn-share-modal" class="btn btn-share" title="Generar link para mi hijo">
+        🔗 Compartir con mi hijo/a
+      </button>
+      <button id="gen" class="btn btn-primary">
+        ▶️ Recorrido 3D
+      </button>
+      <button id="btn-toggle-child" class="mode-switch-btn" title="Alternar vista">
+        🎮 Modo Niño
+      </button>
+      <!-- Botón SOS siempre accesible -->
+      <button id="sos" class="btn btn-danger">
+        🆘 ¡Me perdí!
+      </button>
+    </div>
+  </header>
+
+  <!-- BARRA DE CONFIGURACIÓN DE MAMÁ (Solo visible en Modo Mamá) -->
+  <div id="mom-bar">
+    <div class="field-group">
+      <label><b>Niño/a:</b></label>
+      <input type="text" id="input-child-name" placeholder="Ej. Thiago" style="width: 110px;">
+    </div>
+    <div class="field-group">
+      <label><b>Ruta:</b></label>
+      <input type="text" id="input-route-title" placeholder="Ej. Del Cole a Casa" style="width: 170px;">
+    </div>
+    <div class="field-group">
+      <label><b>WhatsApp Mamá:</b></label>
+      <input type="tel" id="input-mom-phone" placeholder="51999888777" style="width: 125px;">
+    </div>
+    <div class="field-group" style="margin-left: auto;">
+      <button id="btn-quick-save" class="btn btn-tool" style="font-size: 12px;">💾 Guardar Cambios</button>
+    </div>
+  </div>
+
+  <!-- BARRA DE BIENVENIDA PARA NIÑO (Solo visible en Modo Niño) -->
+  <div id="child-banner">
+    <div>
+      <div class="child-welcome" id="child-welcome-msg">🎒 ¡Hola, Thiago! ⭐</div>
+      <div class="child-sub" id="child-sub-msg">Acompañemos a nuestro personaje en el camino seguro</div>
+    </div>
+    <div style="display: flex; gap: 8px;">
+      <button id="btn-child-start-3d" class="btn btn-success" style="font-size: 16px; padding: 8px 16px;">
+        ▶️ ¡Iniciar Aventura 3D!
+      </button>
+    </div>
+  </div>
+
+  <!-- BARRA DE HERRAMIENTAS DE EDICIÓN DEL CIRCUITO (Solo visible en Modo Mamá) -->
+  <div id="tools-container">
+    <div id="tools">
+      <span class="tool-group-label">Circuito:</span>
+
+      <!-- 1. Inicio -->
+      <button class="btn btn-tool" data-tool="inicio" id="btn-tool-inicio">
+        🚩 Inicio
+      </button>
+      <div class="icon-selector" title="Selecciona el ícono de Inicio">
+        <select id="select-start-icon">
+          <option value="colegio">🏫 Colegio</option>
+          <option value="casa">🏠 Casa</option>
+          <option value="mochila">🎒 Escuela</option>
+          <option value="bandera">🚩 Partida</option>
+        </select>
+      </div>
+
+      <!-- 2. Camino -->
+      <button class="btn btn-tool" data-tool="camino" id="btn-tool-camino">
+        👣 Camino (Trazar)
+      </button>
+
+      <!-- 3. Fin -->
+      <button class="btn btn-tool" data-tool="fin" id="btn-tool-fin">
+        🏁 Llegada / Meta
+      </button>
+      <div class="icon-selector" title="Selecciona el ícono de Llegada">
+        <select id="select-end-icon">
+          <option value="casa">🏠 Casita</option>
+          <option value="abuela">👵 Abuelita</option>
+          <option value="colegio">🏫 Colegio</option>
+          <option value="meta">🏁 Meta</option>
+        </select>
+      </div>
+
+      <span class="tool-group-label" style="margin-left: 6px;">Puntos Seguros:</span>
+      <!-- POIs -->
+      <button class="btn btn-tool" data-tool="bodega">🛒 Bodega</button>
+      <button class="btn btn-tool" data-tool="farmacia">💊 Farmacia</button>
+      <button class="btn btn-tool" data-tool="parque">🌳 Parque</button>
+      <button class="btn btn-tool" data-tool="cruce">🚦 Semáforo</button>
+      <button class="btn btn-tool" data-tool="seguro">🛡️ Lugar Seguro</button>
+
+      <span style="flex: 1;"></span>
+      <button id="btn-undo" class="btn btn-tool">↩️ Deshacer</button>
+      <button id="btn-clear" class="btn btn-tool">🗑️ Limpiar</button>
+    </div>
+    <div id="status-hint">💡 Paso 1: Toca el mapa para fijar el punto de Inicio. Luego traza el Camino.</div>
+  </div>
+
+  <!-- VISTA DEL MAPA 2D (LEAFLET) -->
+  <div id="map-view">
+    <div id="map"></div>
+  </div>
+
+  <!-- VISTA 3D INTERACTIVA PARA EL NIÑO -->
+  <div id="v3">
+    <canvas id="c3"></canvas>
+    <div id="hud-stars">⭐ <span id="hud-star-count">0</span> estrellas</div>
+    <div id="hud-mission" id="hud-mission-title">Camino Seguro</div>
+    <div id="v3-controls">
+      <button id="btn-v3-back" class="btn btn-primary">🗺️ Volver al mapa</button>
+    </div>
+  </div>
+
+  <!-- MODAL DE PREGUNTAS CON COTILLÓN Y GUÍA EDUCATIVA -->
+  <div class="modal" id="mq">
+    <div class="modal-box">
+      <span class="q-badge" id="q-badge">🚦 Cruce Seguro</span>
+      <h2 class="q-title" id="qt">Pregunta de seguridad</h2>
+      <div class="q-options" id="qo"></div>
+      
+      <!-- Feedback educativo / Cotillón -->
+      <div class="feedback-box" id="qf"></div>
+
+      <button id="qn" class="btn btn-primary" style="display:none; width: 100%; margin-top: 14px; font-size: 16px;">
+        Continuar mi camino 🚀
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL DE COMPARTIR CON EL NIÑO (Generador de Enlace) -->
+  <div class="modal" id="modal-share">
+    <div class="modal-box">
+      <div style="font-size: 40px; margin-bottom: 8px;">🔗✨</div>
+      <h2 style="margin: 0; font-family: 'Fredoka', cursive; color: var(--primary);">
+        Enlace para tu hijo/a
+      </h2>
+      <p style="color: var(--text-muted); font-size: 14px; margin: 8px 0;">
+        Tu hijo podrá interactuar directamente con este mapa personalizado con su nombre y recorrido.
+      </p>
+      
+      <div class="share-link-input" id="share-link-display">https://...</div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <button id="btn-copy-link" class="btn btn-success" style="width: 100%; font-size: 16px;">
+          📋 Copiar Enlace
+        </button>
+        <button id="btn-whatsapp-share" class="btn btn-share" style="width: 100%; font-size: 16px; background: #25d366; border-color: #25d366; box-shadow: 0 3px 0 #128c7e;">
+          📲 Enviar por WhatsApp
+        </button>
+        <button id="btn-test-as-child" class="btn btn-primary" style="width: 100%; font-size: 15px;">
+          🎮 Probar como mi hijo/a ahora
+        </button>
+        <button id="btn-close-share" class="btn" style="width: 100%; margin-top: 4px;">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE FELICITACIÓN / FIN DE RECORRIDO -->
+  <div class="modal" id="modal-victory">
+    <div class="modal-box">
+      <div style="font-size: 56px; margin-bottom: 8px;">🏆🌟</div>
+      <h2 style="margin: 0; font-family: 'Fredoka', cursive; color: #f59e0b; font-size: 26px;">
+        ¡Misión Cumplida!
+      </h2>
+      <p id="victory-child-msg" style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 10px 0;">
+        ¡Llegaste a tu meta con éxito!
+      </p>
+      <div style="background: #fef3c7; border: 2px solid #fde68a; border-radius: 16px; padding: 12px; margin: 12px 0;">
+        <div style="font-size: 22px; font-weight: 800; color: #b45309;" id="victory-score">
+          ⭐ 3/3 Estrellas Ganadas
+        </div>
+        <p style="margin: 4px 0 0; font-size: 14px; color: #92400e;">
+          ¡Eres todo un Súper Explorador del Camino Seguro!
+        </p>
+      </div>
+      <button id="btn-victory-again" class="btn btn-primary" style="width: 100%; font-size: 16px;">
+        🎉 Volver a Jugar
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL SOS "ME PERDÍ" -->
+  <div class="modal" id="ml">
+    <div class="modal-box">
+      <div style="font-size: 40px; margin-bottom: 8px;">🛡️❤️</div>
+      <h2 style="margin: 0; font-family: 'Fredoka', cursive; color: #0284c7;">
+        Tranquilo, estás protegido
+      </h2>
+      <p style="color: #475569; font-size: 14px; margin: 8px 0;">
+        Mantén la calma. Quédate en un lugar concurrido y pide a un adulto de confianza que contacte a mamá.
+      </p>
+      
+      <div id="sl" style="text-align: left; margin: 12px 0; background: #f8fafc; border-radius: 12px; padding: 10px;"></div>
+      
+      <button id="sw" class="btn btn-success" style="width:100%; font-size: 16px; margin-bottom: 8px; background: #25d366; border-color: #25d366;">
+        📲 Avisar a mamá con mi ubicación exacta
+      </button>
+      
+      <div style="background: #f1f5f9; border-radius: 8px; padding: 8px; font-size: 12px; color: #64748b; margin-bottom: 10px;">
+        Teléfonos de emergencia gratuitos: <b>Policía 105</b> · <b>Bomberos 116</b>
+      </div>
+      
+      <button id="lc" class="btn" style="width:100%">
+        Entendido, volver
+      </button>
+    </div>
+  </div>
+
+  <!-- SCRIPT PRINCIPAL -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
